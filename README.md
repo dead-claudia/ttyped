@@ -1,5 +1,7 @@
 # ttyped
 
+[![Build Status](https://travis-ci.org/impinball/ttyped.svg)](https://travis-ci.org/impinball/ttyped)
+
 A runtime type checking library for [LiveScript](https://livescript.net), JavaScript, and [CoffeeScript](https://coffeescript.org). It has two modes, closure-based and code gen, and it uses [type-check](https://npm.im/type-check) for the type syntax. It is also compatible with the [ES6 decorators proposal](https://github.com/wycats/javascript-decorators).
 
 It was mostly designed with LiveScript in mind, but it is very useful in any compile-to-JS dynamic language, or even JavaScript itself.
@@ -180,6 +182,12 @@ This is great infix in LiveScript, like so:
 formatString value `type.as` 'String'
 ```
 
+```js
+type.is(value, type)
+```
+
+Test if `value` is of type `type`, returning a boolean.
+
 Also, the `type` function also has all the properties accessible from the module, and they point to the global equivalent.
 
 ```js
@@ -199,7 +207,7 @@ class extends type.Type {}
 ### Enable/disable type checking
 
 ```js
-ttyped.check(boolean)
+type.check(boolean)
 ```
 
 Call with `true` to enable runtime checking, and `false` to disable it.
