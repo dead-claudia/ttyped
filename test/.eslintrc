@@ -1,0 +1,11 @@
+{
+    "extends": "../.eslintrc",
+
+    "env": {
+        "mocha": true
+    },
+
+    "rules": {
+        "max-nested-callbacks": [2, 5]
+    }
+}

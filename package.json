@@ -1,0 +1,43 @@
+{
+  "name": "ttyped",
+  "version": "0.1.0",
+  "description": "Runtime type checking for JavaScript/CoffeeScript/LiveScript",
+  "main": "gen.js",
+  "browser": "csp.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "mocha"
+  },
+  "files": [
+    "csp.js",
+    "gen.js",
+    "lib"
+  ],
+  "keywords": [
+    "type checking",
+    "types",
+    "type"
+  ],
+  "author": "Isiah Meadows",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "eslint": "^1.9.0",
+    "mocha": "^2.3.4"
+  },
+  "dependencies": {
+    "type-check": "^0.3.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/impinball/ttyped.git"
+  },
+  "bugs": {
+    "url": "https://github.com/impinball/ttyped/issues"
+  },
+  "homepage": "https://github.com/impinball/ttyped#readme"
+}
