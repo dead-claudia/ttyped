@@ -1,56 +1,52 @@
 "use strict"
 
-module.exports = function (lstyped) {
-    return function () {
-        return run(lstyped)
-    }
-}
+var ttyped = require("../.")
+var expect = require("chai").expect
 
-function run(lstyped) {
-    var expect = require("chai").expect
-
+describe("ttyped", function () {
+    if (global.toString === Object.prototype.toString) return
     describe("get type", function () {
         it("exists", function () {
-            expect(lstyped).to.have.ownProperty("type")
+            expect(ttyped).to.have.ownProperty("type")
         })
     })
 
     describe("check()", function () {
         it("exists", function () {
-            expect(lstyped.check).to.be.a("function")
+            expect(ttyped.check).to.be.a("function")
         })
     })
 
     describe("class Type", function () {
         it("exists", function () {
-            expect(lstyped.Type).to.be.a("function")
+            expect(ttyped.Type).to.be.a("function")
         })
 
         it("throws when instantiated directly", function () {
             expect(function () {
-                new lstyped.Type()
+                new ttyped.Type()
             }).to.throw()
         })
 
         it("throws when called", function () {
             expect(function () {
                 // Call indirectly
-                (0, lstyped.Type)()
+                (0, ttyped.Type)()
             }).to.throw()
         })
 
-        it("throws when called as lstyped member", function () {
+        it("throws when called as ttyped member", function () {
             expect(function () {
-                lstyped.Type()
+                ttyped.Type()
             }).to.throw()
         })
 
         it("throws when instantiated from subclass without init", function () {
             function Sub() {
-                lstyped.Type.call(this)
+                ttyped.Type.call(this)
             }
 
-            Sub.prototype = Object.create(lstyped.Type.prototype)
+            Sub.prototype = Object.create(ttyped.Type.prototype)
             Sub.prototype.constructor = Sub
 
             expect(function () {
@@ -61,34 +57,34 @@ function run(lstyped) {
 
     describe("type~release", function () {
         before(function () {
-            lstyped.check(false)
+            ttyped.check(false)
         })
 
         it("returns a function when initialized", function () {
-            expect(lstyped.type).to.be.a("function")
+            expect(ttyped.type).to.be.a("function")
         })
 
         it("contains get type", function () {
-            expect(lstyped.type).to.have.ownProperty("type")
+            expect(ttyped.type).to.have.ownProperty("type")
         })
 
         it("contains check()", function () {
-            expect(lstyped.type.check).to.equal(lstyped.check)
+            expect(ttyped.type.check).to.equal(ttyped.check)
         })
 
         it("contains Type()", function () {
-            expect(lstyped.type.Type).to.equal(lstyped.Type)
+            expect(ttyped.type.Type).to.equal(ttyped.Type)
         })
 
         it("doesn't assert types", function () {
             var obj = {}
-            var type = lstyped.type
+            var type = ttyped.type
             expect(type.as(obj, "Object")).to.equal(obj)
             expect(type.as(obj, "Array")).to.equal(obj)
         })
 
         it("retains the correct lengths", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             expect(type).to.have.length(0)
             expect(type.as).to.have.length(2)
             expect(type.add).to.have.length(3)
@@ -104,14 +100,14 @@ function run(lstyped) {
         })
 
         it("returns the correct value", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("*")(function (x) { return x })
             var obj = {}
             expect(func(obj)).to.equal(obj)
         })
 
         it("doesn't fail on improper types", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("Number")(function (x) {
                 return x + 1
             })
@@ -122,7 +118,7 @@ function run(lstyped) {
         })
 
         it("doesn't fail on correct types", function () {
-            var type = lstyped.type
+            var type = ttyped.type
 
             expect(function () {
                 var func = type("Number")(function (x) {
@@ -134,7 +130,7 @@ function run(lstyped) {
         })
 
         it("doesn't fail on invalid syntax", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             expect(function () {
                 var func = type("!!1!!1!!11!")(function (x) {
                     return x + 1
@@ -145,7 +141,7 @@ function run(lstyped) {
         })
 
         it("can add to the type", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             expect(function () {
                 type.add("Type", "Number", function () { return true })
             }).to.not.throw()
@@ -154,28 +150,28 @@ function run(lstyped) {
 
     describe("type~debug", function () {
         before(function () {
-            lstyped.check(true)
+            ttyped.check(true)
         })
 
         it("returns a function when initialized", function () {
-            expect(lstyped.type).to.be.a("function")
+            expect(ttyped.type).to.be.a("function")
         })
 
         it("contains get type", function () {
-            expect(lstyped.type).to.have.ownProperty("type")
+            expect(ttyped.type).to.have.ownProperty("type")
         })
 
         it("contains check()", function () {
-            expect(lstyped.type.check).to.equal(lstyped.check)
+            expect(ttyped.type.check).to.equal(ttyped.check)
         })
 
         it("contains Type()", function () {
-            expect(lstyped.type.Type).to.equal(lstyped.Type)
+            expect(ttyped.type.Type).to.equal(ttyped.Type)
         })
 
         it("can be used to assert a type at runtime", function () {
             var obj = {}
-            var type = lstyped.type
+            var type = ttyped.type
             expect(type.as(obj, "Object")).to.equal(obj)
             expect(function () {
                 type.as(obj, "Array")
@@ -183,7 +179,7 @@ function run(lstyped) {
         })
 
         it("retains the correct lengths", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             expect(type).to.have.length(0)
             expect(type.as).to.have.length(2)
             expect(type.add).to.have.length(3)
@@ -199,14 +195,14 @@ function run(lstyped) {
         })
 
         it("returns the correct value", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("*")(function (x) { return x })
             var obj = {}
             expect(func(obj)).to.equal(obj)
         })
 
         it("fails on improper types", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("Number")(function (x) {
                 return x + 1
             })
@@ -217,7 +213,7 @@ function run(lstyped) {
         })
 
         it("doesn't fail on correct types", function () {
-            var type = lstyped.type
+            var type = ttyped.type
 
             var func = type("Number")(function (x) {
                 return x + 1
@@ -227,7 +223,7 @@ function run(lstyped) {
         })
 
         it("fails on invalid syntax", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             expect(function () {
                 type("!!1!!1!!11!")(function (x) {
                     return x + 1
@@ -236,7 +232,7 @@ function run(lstyped) {
         })
 
         it("can add to the type", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             type.add("Foo", "Number", function (x) { return x === 0 })
             var func = type("Foo")(function (x) {
                 return x + 1
@@ -248,7 +244,7 @@ function run(lstyped) {
         })
 
         it("checks missing arguments", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("Number")(function (x) {
                 return x * 2
             })
@@ -259,7 +255,7 @@ function run(lstyped) {
         })
 
         it("checks two arguments", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("Number", "String")(function (x, y) {
                 return [x * 2, y]
             })
@@ -284,7 +280,7 @@ function run(lstyped) {
         })
 
         it("checks three arguments", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("Number", "String", "[Boolean]")(
             function (x, y, list) {
                 return [x * 2, y].concat(list)
@@ -312,7 +308,7 @@ function run(lstyped) {
         })
 
         it("checks `this` argument", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("this::Number", "Number")(function (x) {
                 return this + x // eslint-disable-line no-invalid-this
             })
@@ -337,7 +333,7 @@ function run(lstyped) {
         })
 
         it("checks rest arguments", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("String", "...Number")(function (x) {
                 return x + ": " + Array.prototype.slice.call(arguments, 1)
                     .join(" + ")
@@ -367,7 +363,7 @@ function run(lstyped) {
         })
 
         it("checks rest arguments in middle", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var func = type("String", "...Number", "String")(function (x) {
                 return x + ": " + Array.prototype.slice.call(arguments, 1, -1)
                     .join(" + ") + " - " + arguments[arguments.length - 1]
@@ -401,7 +397,7 @@ function run(lstyped) {
         })
 
         it("can be made into a decorator", function () {
-            var type = lstyped.type
+            var type = ttyped.type
             var obj = {
                 constant: 10,
                 foo: function (x, y) {
@@ -432,4 +428,4 @@ function run(lstyped) {
             }).to.throw(TypeError)
         })
     })
-}
+})
