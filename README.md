@@ -4,7 +4,7 @@
 
 A runtime type checking library for [LiveScript](https://livescript.net), JavaScript, and [CoffeeScript](https://coffeescript.org). It has two modes, closure-based and code gen, and it uses [type-check](https://npm.im/type-check) for the type syntax. It is also compatible with the [ES6 decorators proposal](https://github.com/wycats/javascript-decorators).
 
-It was mostly designed with LiveScript in mind, but it is very useful in any compile-to-JS dynamic language, or even JavaScript itself.
+It was mostly designed with LiveScript in mind, but it is very useful in any compile-to-JS dynamic language (especially CoffeeScript), or even JavaScript itself.
 
 ## Installation
 
@@ -256,7 +256,7 @@ class Class extends Type {
 
 ## Issues
 
-Use the [issue tracker](https://github.com/impinball/ttyped/issues). Pull requests are welcome, just make sure ESLint is happy and it stays well tested.
+Use the [issue tracker](https://github.com/impinball/ttyped/issues). Pull requests are welcome, just make sure CoffeeLint is happy and it stays well tested.
 
 ## License
 

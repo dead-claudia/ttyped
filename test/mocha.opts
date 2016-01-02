@@ -1,2 +1,5 @@
 --ui bdd
---reporter spec
+--reporter dot
+--recursive
+--compilers js:./scripts/register.js
+--require ./scripts/sinonify.js
