@@ -8,7 +8,9 @@ var regenerate = require("regenerate")
 
 // Set up a shorthand function to import Unicode data.
 function get(what) {
+    /* eslint-disable global-require */
     return require("unicode-8.0.0/" + what + "/code-points")
+    /* eslint-enable global-require */
 }
 
 // Get the Unicode categories needed to construct the ES5 regex.
