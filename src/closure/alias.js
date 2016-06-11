@@ -20,15 +20,22 @@ if ((() => {
     // ES6 standardized `Function#name`, and `Function#displayName` is a
     // common non-standard extension.
     trySetProps = function (target, func) {
-        return Object.defineProperties(target, {
+        Object.defineProperties(target, {
             length: Object.getOwnPropertyDescriptor(func, "length"),
             name: Object.getOwnPropertyDescriptor(func, "name"),
-            displayName: Object.getOwnPropertyDescriptor(func, "displayName"),
         })
+
+        const desc = Object.getOwnPropertyDescriptor(func, "displayName")
+
+        if (desc != null) {
+            Object.defineProperty(target, "displayName", desc)
+        }
+
+        return target
     }
 } else if ((() => {
     try {
-        return Function("return!0")() // eslint-disable-line no-new-func
+        return global.Function("return!0")() // eslint-disable-line no-new-func
     } catch (_) {
         return false
     }
@@ -45,7 +52,7 @@ if ((() => {
         if (identifierRegexp.test(name)) {
             const inner = name === "f" ? "_" : "f"
             /* eslint-disable no-new-func */
-            return new Function(inner, `
+            return new global.Function(inner, `
                 return function ${name}(${res.slice(1)}) {
                     return ${inner}.apply(this, arguments)
                 }
@@ -54,7 +61,7 @@ if ((() => {
         } else {
             // Skip setting the name.
             /* eslint-disable no-new-func */
-            return new Function("f", `
+            return new global.Function("f", `
                 return function (${res.slice(1)}) {
                     return f.apply(this, arguments)
                 }

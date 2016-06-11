@@ -166,7 +166,7 @@ describe("closure/alias default alias()", () => {
         })
     })
 
-    context("can't eval", () => {
+    context.skip("can't eval", () => {
         let alias
         before(() => alias = load(F.install, F.uninstall))
 
